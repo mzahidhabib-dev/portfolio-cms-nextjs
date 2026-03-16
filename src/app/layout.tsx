@@ -1,9 +1,20 @@
-import type { ReactNode } from "react";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar"
+import { Geist } from "next/font/google";
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+
+
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  );
+    <SidebarProvider>
+      <div className="flex min-h-screen w-full">
+        <AppSidebar />
+        <main className="flex-1 p-6">
+          <SidebarTrigger className="mb-4" />
+          {children}
+        </main>
+      </div>
+    </SidebarProvider>
+  )
 }
