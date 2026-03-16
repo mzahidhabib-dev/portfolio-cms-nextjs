@@ -10,6 +10,8 @@ import {
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -32,143 +34,115 @@ export function AppSidebar() {
   const pathname = usePathname();
 
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar
+      collapsible="icon"
+      className="border-r border-black/5 bg-white/60 backdrop-blur-xl dark:bg-black/40 dark:border-white/10"
+    >
+      {/* 1. PROFESSIONAL LOGO PLACEMENT */}
+      <SidebarHeader className="p-4">
+        <div className="flex items-center gap-3 px-2">
+          <div className="flex size-9 items-center justify-center rounded-xl bg-primary shadow-lg shadow-primary/20">
+            <Code2 className="size-5 text-white" />
+          </div>
+          <div className="flex flex-col group-data-[collapsible=icon]:hidden">
+            <span className="font-bold leading-none tracking-tight">Portfolio CMS</span>
+            <span className="text-[10px] text-muted-foreground font-medium">Production-Grade</span>
+          </div>
+        </div>
+      </SidebarHeader>
+
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Portfolio CMS</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={pathname === item.url}>
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-              <SidebarMenuItem>
-                <ThemeToggle />
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        <SidebarMenu className="p-3 gap-3">
+          {items.map((item) => (
+            <SidebarMenuItem key={item.title}>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname === item.url}
+                tooltip={item.title}
+                className={`
+                  h-11 transition-all duration-200
+                  hover:bg-black/5 dark:hover:bg-white/10 
+                  /* ENHANCED ACTIVE STATE */
+                  data-[active=true]:bg-black/10 dark:data-[active=true]:bg-white/20 
+                  data-[active=true]:text-primary 
+                  data-[active=true]:shadow-sm
+                  data-[active=true]:border-l-4 data-[active=true]:border-primary
+                `}
+              >
+                <Link href={item.url} className="flex items-center gap-3">
+                  <item.icon
+                    className={`size-5 shrink-0 transition-colors ${
+                      pathname === item.url ? "text-primary" : "text-muted-foreground"
+                    }`}
+                  />
+                  <span
+                    className={`font-semibold ${
+                      pathname === item.url ? "text-foreground" : "text-muted-foreground"
+                    }`}
+                  >
+                    {item.title}
+                  </span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
       </SidebarContent>
+
+      {/* 2. ADJUSTED FOOTER SPACING */}
+      <SidebarFooter className=" border-black/5 dark:border-white/10">
+        <SidebarMenu className="gap-6 p-4 border-t"> {/* Increased gap from 4 to 6 for better breathing room */}
+          <SidebarMenuItem>
+            <ThemeToggle />
+          </SidebarMenuItem>
+
+          <SidebarMenuItem>
+            <SidebarMenuButton 
+              size="lg" 
+              className="hover:bg-black/5 dark:hover:bg-white/10 transition-colors group-data-[collapsible=icon]:p-0"
+            >
+              <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white shadow-md">
+                <span className="text-xs font-bold">M</span>
+              </div>
+              <div className="flex flex-col overflow-hidden text-left group-data-[collapsible=icon]:hidden">
+                <span className="truncate text-sm font-bold">Mohammad</span>
+                <span className="truncate text-[10px] text-muted-foreground uppercase tracking-wider font-extrabold">Admin</span>
+              </div>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   );
 }
 
-// "use client"
-
-// import {
-//   Home, User2, Code2, Briefcase, Mail,
-//   ChevronUp, LogOut, Settings, ExternalLink
-// } from "lucide-react"
-// import {
-//   Sidebar,
-//   SidebarContent,
-//   SidebarFooter,
-//   SidebarHeader,
-//   SidebarMenu,
-//   SidebarMenuButton,
-//   SidebarMenuItem,
-// } from "@/components/ui/sidebar"
-// import {
-//   DropdownMenu,
-//   DropdownMenuContent,
-//   DropdownMenuItem,
-//   DropdownMenuTrigger
-// } from "@/components/ui/dropdown-menu"
-// import Link from "next/link"
-// import { usePathname } from "next/navigation"
-
-// const items = [
-//   { title: "Home", url: "/", icon: Home },
-//   { title: "About", url: "/about", icon: User2 },
-//   { title: "Skills", url: "/skills", icon: Code2 },
-//   { title: "Projects", url: "/projects", icon: Briefcase },
-//   { title: "Contact", url: "/contact", icon: Mail },
-// ]
-
 // export function AppSidebar() {
-//   const pathname = usePathname()
+//   const pathname = usePathname();
 
 //   return (
-//     <Sidebar collapsible="icon" className="border-r">
-//       {/* 1. NAVBAR SECTION (The Header) */}
-//       <SidebarHeader className="border-b py-4">
-//         <SidebarMenu>
-//           <SidebarMenuItem>
-//             <SidebarMenuButton size="lg" asChild>
-//               <Link href="/">
-//                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-//                   <Code2 className="size-5" />
-//                 </div>
-//                 <div className="flex flex-col gap-0.5 leading-none">
-//                   <span className="font-semibold">Mohammad.dev</span>
-//                   <span className="text-xs text-muted-foreground">CMS v1.0</span>
-//                 </div>
-//               </Link>
-//             </SidebarMenuButton>
-//           </SidebarMenuItem>
-//         </SidebarMenu>
-//       </SidebarHeader>
-
-//       {/* 2. MENU SECTION (The Content) */}
+//     <Sidebar collapsible="icon">
 //       <SidebarContent>
-//         <SidebarMenu className="p-2">
-//           {items.map((item) => (
-//             <SidebarMenuItem key={item.title}>
-//               <SidebarMenuButton
-//                 asChild
-//                 tooltip={item.title}
-//                 isActive={pathname === item.url}
-//                 className="hover:bg-accent hover:text-accent-foreground"
-//               >
-//                 <Link href={item.url}>
-//                   <item.icon className="size-5" />
-//                   <span className="font-medium">{item.title}</span>
-//                 </Link>
-//               </SidebarMenuButton>
-//             </SidebarMenuItem>
-//           ))}
-//         </SidebarMenu>
+//         <SidebarGroup>
+//           <SidebarGroupLabel>Portfolio CMS</SidebarGroupLabel>
+//           <SidebarGroupContent>
+//             <SidebarMenu>
+//               {items.map((item) => (
+//                 <SidebarMenuItem key={item.title}>
+//                   <SidebarMenuButton asChild isActive={pathname === item.url}>
+//                     <Link href={item.url}>
+//                       <item.icon />
+//                       <span>{item.title}</span>
+//                     </Link>
+//                   </SidebarMenuButton>
+//                 </SidebarMenuItem>
+//               ))}
+//               <SidebarMenuItem>
+//                 <ThemeToggle />
+//               </SidebarMenuItem>
+//             </SidebarMenu>
+//           </SidebarGroupContent>
+//         </SidebarGroup>
 //       </SidebarContent>
-
-//       {/* 3. FOOTER SECTION (The Profile/Account) */}
-//       <SidebarFooter className="border-t p-2">
-//         <SidebarMenu>
-//           <SidebarMenuItem>
-//             <DropdownMenu>
-//               <DropdownMenuTrigger asChild>
-//                 <SidebarMenuButton size="lg" className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
-//                   <div className="flex aspect-square size-8 items-center justify-center rounded-full bg-muted border">
-//                     <User2 className="size-5" />
-//                   </div>
-//                   <div className="grid flex-1 text-left text-sm leading-tight">
-//                     <span className="truncate font-semibold">Mohammad</span>
-//                     <span className="truncate text-xs text-muted-foreground underline flex items-center gap-1">
-//                       Live Portfolio <ExternalLink className="size-2" />
-//                     </span>
-//                   </div>
-//                   <ChevronUp className="ml-auto size-4" />
-//                 </SidebarMenuButton>
-//               </DropdownMenuTrigger>
-//               <DropdownMenuContent side="top" className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg">
-//                 <DropdownMenuItem asChild>
-//                    <Link href="/settings" className="cursor-pointer">
-//                     <Settings className="mr-2 size-4" /> Settings
-//                    </Link>
-//                 </DropdownMenuItem>
-//                 <DropdownMenuItem className="text-destructive cursor-pointer">
-//                   <LogOut className="mr-2 size-4" /> Logout
-//                 </DropdownMenuItem>
-//               </DropdownMenuContent>
-//             </DropdownMenu>
-//           </SidebarMenuItem>
-//         </SidebarMenu>
-//       </SidebarFooter>
 //     </Sidebar>
-//   )
+//   );
 // }
