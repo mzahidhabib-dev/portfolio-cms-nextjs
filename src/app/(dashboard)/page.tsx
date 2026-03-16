@@ -12,7 +12,7 @@ export default function DashboardPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Portfolio Overview</h1>
-        <p className="text-muted-foreground">Welcome back, Mohammad. Here is what's happening with your portfolio.</p>
+        <p className="text-muted-foreground">Welcome back, Mohammad. Here is whats happening with your portfolio.</p>
       </div>
 
       {/* Stats Grid */}
@@ -35,7 +35,7 @@ export default function DashboardPage() {
           {[1, 2, 3].map((i) => (
             <div key={i} className="flex items-center justify-between border-b pb-2 last:border-0">
               <div className="flex flex-col">
-                <span className="text-sm font-medium">Updated project "Famocare"</span>
+                <span className="text-sm font-medium">Updated project Famocare</span>
                 <span className="text-xs text-muted-foreground">Modified tech stack and live demo link</span>
               </div>
               <span className="text-xs text-muted-foreground">2 hours ago</span>
