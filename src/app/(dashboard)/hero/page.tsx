@@ -68,7 +68,7 @@ export default function HomeHeroPage() {
         <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Home Hero</h1>
-            <p className="text-muted-foreground text-sm">Manage your portfolio's main introduction.</p>
+            <p className="text-muted-foreground text-sm">Manage your portfolio`s main introduction.</p>
           </div>
           <Button variant="outline" size="sm" type="button" onClick={() => { form.reset(); setMainImg(null); setSecImg(null); }} className="gap-2">
             <RotateCcw className="size-4" /> Reset Form

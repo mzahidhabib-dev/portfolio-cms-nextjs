@@ -6,6 +6,7 @@ export default function DashboardPage() {
     { label: "Tech Stack", value: "18", icon: Code2, color: "text-purple-600" },
     { label: "Messages", value: "3 New", icon: MessageSquare, color: "text-orange-600" },
     { label: "Site Status", value: "Online", icon: Globe, color: "text-green-600" },
+    
   ]
 
   return (
