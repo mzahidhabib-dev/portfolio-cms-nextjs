@@ -20,10 +20,15 @@ import {
 } from "@/components/ui/form"; // Use the simple version if shadcn is still bugged
 
 const heroSchema = z.object({
-  heading: z.string().min(5, "Heading is too short").max(100),
-  description: z.string().min(20, "Please provide a longer description").max(500),
-  cvText: z.string().min(2).max(20),
-  contactText: z.string().min(2).max(20),
+  // Allows empty, but if filled, must be 5-100 chars
+  heading: z.string().max(200).optional().or(z.literal("")), 
+  
+  // Allows empty, but if filled, must be max 500
+  description: z.string().max(5000).optional().or(z.literal("")),
+  
+  // Buttons usually need at least some text if they exist
+  cvText: z.string().max(20).optional().or(z.literal("")),
+  contactText: z.string().max(20).optional().or(z.literal("")),
 });
 
 type HeroValues = z.infer<typeof heroSchema>;
