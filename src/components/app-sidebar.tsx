@@ -5,6 +5,8 @@ import {
   Briefcase,
   Code2,
   User2,
+  Settings2,
+  Home,
 } from "lucide-react";
 import {
   Sidebar,
@@ -21,6 +23,8 @@ import { ThemeToggle } from "@/components/theme-toggle";
 
 const items = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard },
+  { title: "Site Config", url: "/site-config", icon: Settings2 }, 
+  { title: "Home", url: "/hero", icon: Home }, 
   { title: "Projects", url: "/projects", icon: Briefcase },
   { title: "Skills", url: "/skills", icon: Code2 },
   { title: "About", url: "/about", icon: User2 },
