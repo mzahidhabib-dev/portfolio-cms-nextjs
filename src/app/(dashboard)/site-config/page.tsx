@@ -34,11 +34,11 @@ export default function SiteIdentityPage() {
     <div className="space-y-8 pb-24">
       <div className="flex justify-between items-start">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Site Identity</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Site Config</h1>
           <p className="text-muted-foreground">Manage your public portfolio&apos;s branding and navigation.</p>
         </div>
         <Button variant="outline" size="sm" onClick={handleReset} className="gap-2">
-          <RotateCcw className="size-4" /> Reset Form
+          <RotateCcw className="size-4" /> Reset All
         </Button>
       </div>
 
