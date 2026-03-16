@@ -5,6 +5,10 @@ import {
   Briefcase,
   Code2,
   User2,
+  Settings2,
+  Home,
+  Mail,
+  PanelsTopLeft,
 } from "lucide-react";
 import {
   Sidebar,
@@ -21,10 +25,15 @@ import { ThemeToggle } from "@/components/theme-toggle";
 
 const items = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard },
-  { title: "Projects", url: "/projects", icon: Briefcase },
-  { title: "Skills", url: "/skills", icon: Code2 },
+  { title: "Site Config", url: "/site-config", icon: Settings2 }, 
+  { title: "Home", url: "/hero", icon: Home }, 
   { title: "About", url: "/about", icon: User2 },
+  { title: "Skills", url: "/skills", icon: Code2 },
+  { title: "Projects", url: "/projects", icon: Briefcase },
+  { title: "Contact Info", url: "/contact", icon: Mail }, 
+  { title: "Footer Settings", url: "/footer", icon: PanelsTopLeft }, 
 ];
+
 
 export function AppSidebar() {
   const pathname = usePathname();
