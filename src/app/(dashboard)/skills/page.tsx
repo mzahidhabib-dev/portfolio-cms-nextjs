@@ -7,17 +7,18 @@ import * as z from "zod";
 import { toast } from "sonner";
 import { 
   Save, Upload, Type, Code2, 
-  Plus, Trash2, ExternalLink, X, RotateCcw, Edit2, LayoutGrid, Check
+  Plus, Trash2, ExternalLink, X, RotateCcw, Edit2, LayoutGrid, Check, AlertCircle
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 
+// --- SCHEMA & INTERFACES ---
 const skillsSchema = z.object({
   heading: z.string().optional(),
   description: z.string().optional(),
@@ -38,6 +39,7 @@ export default function SkillsPage() {
   const [skillLogo, setSkillLogo] = useState<string | null>(null);
   const [skillsList, setSkillsList] = useState<SkillItem[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null); // New state for safety
   
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -74,6 +76,12 @@ export default function SkillsPage() {
     setSkillLogo(null);
   };
 
+  const confirmDelete = (id: string) => {
+    setSkillsList(prev => prev.filter(s => s.id !== id));
+    setDeleteConfirmId(null);
+    toast.success("Skill deleted");
+  };
+
   const handleEditClick = (skill: SkillItem) => {
     setEditingId(skill.id);
     form.setValue("skillTitle", skill.title);
@@ -104,21 +112,23 @@ export default function SkillsPage() {
 
   return (
     <Form {...form}>
-      <div className="space-y-8 pb-24">
+      <div className="space-y-8 pb-24 px-4 sm:px-0">
         
-        <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between px-4 sm:px-0">
+        {/* HEADER AREA */}
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Skills Section</h1>
             <p className="text-muted-foreground text-sm">Manage your tech stack and section details.</p>
           </div>
-          <Button variant="outline" size="sm" onClick={() => { form.reset(); setSkillsList([]); setSkillLogo(null); }} className="gap-2">
+          <Button variant="outline" size="sm" onClick={() => { if(confirm("Reset all changes?")) { form.reset(); setSkillsList([]); setSkillLogo(null); }}} className="gap-2 w-full sm:w-auto">
             <RotateCcw className="size-4" /> Reset All
           </Button>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-12 px-4 sm:px-0">
+        <div className="grid gap-6 lg:grid-cols-12">
           
           <div className="lg:col-span-7 space-y-6">
+            {/* SECTION SETTINGS */}
             <div className="rounded-xl border bg-card p-6 shadow-sm space-y-4">
               <h2 className="text-lg font-semibold flex items-center gap-2 mb-2">
                 <Type className="size-4 text-primary" /> Header Settings
@@ -131,52 +141,65 @@ export default function SkillsPage() {
               )} />
             </div>
 
-            <div className="rounded-xl border bg-card p-6 shadow-sm">
+            {/* SKILLS LIST TABLE */}
+            <div className="rounded-xl border bg-card p-6 shadow-sm overflow-hidden">
               <h2 className="text-lg font-semibold flex items-center gap-2 mb-4">
                 <LayoutGrid className="size-4 text-primary" /> Active Skills
               </h2>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[60px]">Logo</TableHead>
-                    <TableHead>Skill Name</TableHead>
-                    <TableHead>Experience</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {skillsList.map((skill) => (
-                    <TableRow key={skill.id}>
-                      <TableCell>
-                        <div className="size-9 rounded bg-muted flex items-center justify-center overflow-hidden border">
-                          {skill.logo ? <img src={skill.logo} alt="" className="object-contain" /> : <Code2 className="size-4 opacity-20" />}
-                        </div>
-                      </TableCell>
-                      <TableCell className="font-medium text-sm">{skill.title}</TableCell>
-                      <TableCell>
-                        <span className="text-[10px] bg-secondary text-secondary-foreground px-2 py-1 rounded-md font-bold uppercase whitespace-nowrap">
-                          {skill.exp || "N/A"}
-                        </span>
-                      </TableCell>
-                      <TableCell className="text-right space-x-1">
-                        <Button variant="ghost" size="icon" onClick={() => handleEditClick(skill)} className="size-8 hover:text-primary"><Edit2 className="size-3" /></Button>
-                        <Button variant="ghost" size="icon" onClick={() => setSkillsList(prev => prev.filter(s => s.id !== skill.id))} className="size-8 text-destructive hover:bg-destructive/10"><Trash2 className="size-3" /></Button>
-                      </TableCell>
+              <div className="overflow-x-auto -mx-6 px-6"> {/* Mobile Responsive Scroll Wrapper */}
+                <Table className="min-w-[500px]">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-[60px]">Logo</TableHead>
+                      <TableHead>Skill Name</TableHead>
+                      <TableHead>Experience</TableHead>
+                      <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
-                  ))}
-                  {skillsList.length === 0 && (
-                    <TableRow><TableCell colSpan={4} className="text-center py-10 text-muted-foreground text-xs uppercase tracking-widest">No skills added yet</TableCell></TableRow>
-                  )}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {skillsList.map((skill) => (
+                      <TableRow key={skill.id} className={cn(deleteConfirmId === skill.id && "bg-destructive/5")}>
+                        <TableCell>
+                          <div className="size-9 rounded bg-muted flex items-center justify-center overflow-hidden border">
+                            {skill.logo ? <img src={skill.logo} alt="" className="object-contain p-1" /> : <Code2 className="size-4 opacity-20" />}
+                          </div>
+                        </TableCell>
+                        <TableCell className="font-medium text-sm">{skill.title}</TableCell>
+                        <TableCell>
+                          <span className="text-[10px] bg-secondary text-secondary-foreground px-2 py-1 rounded-md font-bold uppercase whitespace-nowrap">
+                            {skill.exp || "N/A"}
+                          </span>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          {deleteConfirmId === skill.id ? (
+                            <div className="flex items-center justify-end gap-2 animate-in fade-in slide-in-from-right-2 duration-200">
+                              <span className="text-[10px] font-bold text-destructive hidden sm:inline">Sure?</span>
+                              <Button variant="destructive" size="icon" onClick={() => confirmDelete(skill.id)} className="size-8"><Check className="size-3" /></Button>
+                              <Button variant="ghost" size="icon" onClick={() => setDeleteConfirmId(null)} className="size-8"><X className="size-3" /></Button>
+                            </div>
+                          ) : (
+                            <div className="space-x-1">
+                              <Button variant="ghost" size="icon" onClick={() => handleEditClick(skill)} className="size-8 hover:text-primary"><Edit2 className="size-3" /></Button>
+                              <Button variant="ghost" size="icon" onClick={() => setDeleteConfirmId(skill.id)} className="size-8 text-destructive hover:bg-destructive/10"><Trash2 className="size-3" /></Button>
+                            </div>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                    {skillsList.length === 0 && (
+                      <TableRow><TableCell colSpan={4} className="text-center py-10 text-muted-foreground text-xs uppercase tracking-widest">No skills added yet</TableCell></TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </div>
             </div>
           </div>
 
           <div className="lg:col-span-5 space-y-6">
-            {/* CLEANER CARD: No weird dark mode bg, just a clear border glow when editing */}
+            {/* INPUT FORM */}
             <div className={cn(
-              "rounded-xl border bg-card p-6 shadow-sm space-y-5 transition-all duration-300",
-              editingId ? "ring-2 ring-primary border-transparent" : "border-border"
+              "rounded-xl border bg-card p-6 shadow-sm space-y-5 transition-all duration-300 sticky top-6",
+              editingId ? "ring-2 ring-primary border-transparent shadow-lg" : "border-border"
             )}>
               <h2 className="text-lg font-semibold flex items-center gap-2">
                 {editingId ? <Edit2 className="size-4" /> : <Plus className="size-4" />}
@@ -207,12 +230,7 @@ export default function SkillsPage() {
                 )} />
               </div>
 
-              {/* UNIFIED PRIMARY BUTTONS (Black in light, White in dark) */}
-              <Button 
-                type="button" 
-                onClick={handleAddOrUpdateSkill} 
-                className="w-full gap-2 font-bold"
-              >
+              <Button type="button" onClick={handleAddOrUpdateSkill} className="w-full gap-2 font-bold shadow-sm">
                 {editingId ? <Check className="size-4" /> : <Plus className="size-4" />}
                 {editingId ? "Update Skill Item" : "Add to List"}
               </Button>
@@ -226,7 +244,7 @@ export default function SkillsPage() {
 
             <div className="rounded-xl border bg-card p-6 shadow-sm space-y-4">
               <h2 className="text-sm font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-                <ExternalLink className="size-3" /> `View All` Button
+                <ExternalLink className="size-3" /> Footer Link
               </h2>
               <div className="grid gap-3">
                 <FormField control={form.control} name="viewAllText" render={({ field }) => (
@@ -240,9 +258,10 @@ export default function SkillsPage() {
           </div>
         </div>
 
+        {/* FLOATING ACTION BUTTON */}
         <div className="fixed bottom-8 right-8 z-50">
           <Button onClick={form.handleSubmit(onSaveSection)} size="lg" className="rounded-full shadow-2xl gap-2 px-10 h-14 font-bold">
-            <Save className="size-5" /> Save Section Settings
+            <Save className="size-5" /> Save Skills Section
           </Button>
         </div>
       </div>
