@@ -30,8 +30,8 @@ const items = [
   { title: "About", url: "/about", icon: User2 },
   { title: "Skills", url: "/skills", icon: Code2 },
   { title: "Projects", url: "/projects", icon: Briefcase },
-  { title: "Contact Info", url: "/contact", icon: Mail }, 
-  { title: "Footer Settings", url: "/footer", icon: PanelsTopLeft }, 
+  { title: "Contact", url: "/contact", icon: Mail }, 
+  { title: "Footer", url: "/footer", icon: PanelsTopLeft }, 
 ];
 
 
