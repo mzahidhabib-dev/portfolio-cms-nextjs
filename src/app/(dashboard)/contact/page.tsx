@@ -22,10 +22,10 @@ import { cn } from "@/lib/utils";
 // --- SCHEMAS ---
 const contactSettingsSchema = z.object({
   heading: z.string().min(1, "Heading is required"),
-  description: z.string().default(""),
-  submitBtnText: z.string().default("Send Message"),
-  successMsg: z.string().default("Message sent successfully!"),
-  apiEndpoint: z.string().default("/api/contact"),
+  description: z.string().min(0), // Use min(0) instead of .default if you want it required but allowed to be empty
+  submitBtnText: z.string().min(1, "Button text required"),
+  successMsg: z.string().min(1, "Success message required"),
+  apiEndpoint: z.string().min(1, "API Endpoint required"),
 });
 
 interface Message {
