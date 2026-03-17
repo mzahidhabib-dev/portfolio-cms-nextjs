@@ -6,9 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
 import { 
-  Save, Type, Image as ImageIcon, Mail, MessageSquare, 
-  Search, Trash2, CheckCircle2, Clock, Reply, 
-  Settings2, Inbox, Archive, RotateCcw, X, Send, Globe
+  Save, Type, Image as ImageIcon,  MessageSquare, 
+  Search, Trash2, CheckCircle2,  Reply, 
+  Settings2, Inbox, Archive, RotateCcw,  Globe
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
 // --- SCHEMAS ---
 const contactSettingsSchema = z.object({
   heading: z.string().min(1, "Heading is required"),
-  description: z.string().optional(),
+  description: z.string().default(""),
   submitBtnText: z.string().default("Send Message"),
   successMsg: z.string().default("Message sent successfully!"),
   apiEndpoint: z.string().default("/api/contact"),

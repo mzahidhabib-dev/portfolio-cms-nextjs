@@ -6,30 +6,29 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
 import { 
-  Save, RotateCcw, Mail, Phone, ShieldCheck, 
-  Plus, Trash2, Image as ImageIcon, Link as LinkIcon, 
+  Save, RotateCcw, Mail,  ShieldCheck, 
+  Plus, Trash2,  Link as LinkIcon, 
   X, Check, AlertCircle, Globe, Upload
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
-import { cn } from "@/lib/utils";
 
 // --- SCHEMA ---
 const footerSchema = z.object({
-  tagline: z.string().min(1, "Tagline is required"),
-  quickLinksTitle: z.string().default("Quick Links"),
-  socialTitle: z.string().default("Follow Me"),
-  socialTagline: z.string().optional(),
-  email: z.string().email("Invalid email"),
-  phone: z.string().optional(),
-  copyrightText: z.string(),
+  tagline: z.string().min(1),
+  quickLinksTitle: z.string().min(1), // Remove optional, use default
+  socialTitle: z.string().min(1),
+  socialTagline: z.string().default(""), 
+  email: z.string().email(),
+  phone: z.string().default(""), 
+  copyrightText: z.string().min(1),
   socials: z.array(z.object({
     id: z.string(),
-    platform: z.string().min(1, "Platform name required"),
-    url: z.string().url("Must be a valid URL"),
-    logo: z.string().optional(),
+    platform: z.string().min(1),
+    url: z.string().url(),
+    logo: z.string().default(""), // Change optional to default
   })),
 });
 
