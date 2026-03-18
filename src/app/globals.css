@@ -127,3 +127,14 @@
     @apply font-sans;
     }
 }
+
+/* Add this to ensure the root doesn't allow scrolling when in Auth mode */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: auto; /* This is the nuclear option to stop all scrolling */
+}
+
+/* If you only want to stop scrolling on Auth pages, wrap it in a class 
+   or handle it via the layout as shown above. */

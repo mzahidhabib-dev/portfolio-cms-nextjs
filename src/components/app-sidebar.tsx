@@ -9,6 +9,8 @@ import {
   Home,
   Mail,
   PanelsTopLeft,
+  LogOut,
+  ShieldCheck,
 } from "lucide-react";
 import {
   Sidebar,
@@ -20,11 +22,11 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const items = [
-  { title: "Dashboard", url: "/", icon: LayoutDashboard },
+  { title: "Dashboard", url: "/states", icon: LayoutDashboard },
   { title: "Site Config", url: "/site-config", icon: Settings2 }, 
   { title: "Home", url: "/hero", icon: Home }, 
   { title: "About", url: "/about", icon: User2 },
@@ -32,12 +34,23 @@ const items = [
   { title: "Projects", url: "/projects", icon: Briefcase },
   { title: "Contact", url: "/contact", icon: Mail }, 
   { title: "Footer", url: "/footer", icon: PanelsTopLeft }, 
-];
+{ title: "Security", url: "/security", icon: ShieldCheck },];
 
 
 export function AppSidebar() {
-  const pathname = usePathname();
+const pathname = usePathname();
+  const router = useRouter(); // Initialize router
 
+  const handleLogout = () => {
+    // Manually remove the cookie
+    document.cookie = "auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    
+    // Redirect to login
+    router.push("/login");
+    
+    // Force a refresh to ensure middleware catches the empty cookie
+    router.refresh();
+  };
   return (
     <Sidebar
       collapsible="icon"
@@ -102,7 +115,7 @@ export function AppSidebar() {
           </SidebarMenuItem>
 
           {/* Profile - Size and Padding Balanced */}
-          <SidebarMenuItem>
+          {/* <SidebarMenuItem>
             <SidebarMenuButton 
               size="lg" 
               className="w-full hover:bg-black/5 dark:hover:bg-white/10 transition-all 
@@ -117,7 +130,20 @@ export function AppSidebar() {
                 <span className="truncate text-[10px] text-muted-foreground uppercase tracking-wider font-extrabold">Admin</span>
               </div>
             </SidebarMenuButton>
-          </SidebarMenuItem>
+          </SidebarMenuItem> */}
+
+
+          <SidebarMenuItem>
+      <SidebarMenuButton 
+        onClick={handleLogout}
+        className="w-full text-destructive hover:bg-destructive/10 hover:text-destructive transition-all group-data-[collapsible=icon]:justify-center"
+      >
+        <LogOut className="size-5 shrink-0" />
+        <span className="font-bold group-data-[collapsible=icon]:hidden">
+          Logout
+        </span>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
           
         </SidebarMenu>
       </SidebarFooter>
