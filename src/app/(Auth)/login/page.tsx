@@ -1,5 +1,4 @@
-"use client"; // MUST BE THE FIRST LINE
-
+"use client"; 
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Fingerprint, Mail, KeyRound, ChevronRight, Eye, EyeOff, Loader2 } from "lucide-react";
@@ -47,6 +46,7 @@ export default function LoginPage() {
             <Input 
               type="email" 
               required
+                autoComplete="email"
               placeholder="admin@famocare.com" 
               className="pl-12 h-14 bg-background/50 border-border/50 focus:border-primary rounded-2xl transition-all" 
             />
@@ -63,6 +63,7 @@ export default function LoginPage() {
             <Input 
               type={showPassword ? "text" : "password"} 
               required
+              autoComplete="current-password"
               placeholder="••••••••••••" 
               className="pl-12 pr-12 h-14 bg-background/50 border-border/50 focus:border-primary rounded-2xl transition-all" 
             />
