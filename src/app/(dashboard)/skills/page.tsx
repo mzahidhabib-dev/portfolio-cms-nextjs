@@ -215,52 +215,6 @@ export default function SkillsPage() {
               <h2 className="text-lg font-semibold flex items-center gap-2 mb-4">
                 <LayoutGrid className="size-4 text-primary" /> Active Skills
               </h2>
-              {/* <div className="overflow-x-auto -mx-6 px-6"> {/* Mobile Responsive Scroll Wrapper 
-                <Table className="min-w-[500px]">
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="w-[60px]">Logo</TableHead>
-                      <TableHead>Skill Name</TableHead>
-                      <TableHead>Experience</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {skillsList.map((skill) => (
-                      <TableRow key={skill.id} className={cn(deleteConfirmId === skill.id && "bg-destructive/5")}>
-                        <TableCell>
-                          <div className="size-9 rounded bg-muted flex items-center justify-center overflow-hidden border">
-                            {skill.logo ? <img src={skill.logo} alt="" className="object-contain p-1" /> : <Code2 className="size-4 opacity-20" />}
-                          </div>
-                        </TableCell>
-                        <TableCell className="font-medium text-sm">{skill.title}</TableCell>
-                        <TableCell>
-                          <span className="text-[10px] bg-secondary text-secondary-foreground px-2 py-1 rounded-md font-bold uppercase whitespace-nowrap">
-                            {skill.exp || "N/A"}
-                          </span>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          {deleteConfirmId === skill.id ? (
-                            <div className="flex items-center justify-end gap-2 animate-in fade-in slide-in-from-right-2 duration-200">
-                              <span className="text-[10px] font-bold text-destructive hidden sm:inline">Sure?</span>
-                              <Button variant="destructive" size="icon" onClick={() => confirmDelete(skill.id)} className="size-8"><Check className="size-3" /></Button>
-                              <Button variant="ghost" size="icon" onClick={() => setDeleteConfirmId(null)} className="size-8"><X className="size-3" /></Button>
-                            </div>
-                          ) : (
-                            <div className="space-x-1">
-                              <Button variant="ghost" size="icon" onClick={() => handleEditClick(skill)} className="size-8 hover:text-primary"><Edit2 className="size-3" /></Button>
-                              <Button variant="ghost" size="icon" onClick={() => setDeleteConfirmId(skill.id)} className="size-8 text-destructive hover:bg-destructive/10"><Trash2 className="size-3" /></Button>
-                            </div>
-                          )}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                    {skillsList.length === 0 && (
-                      <TableRow><TableCell colSpan={4} className="text-center py-10 text-muted-foreground text-xs uppercase tracking-widest">No skills added yet</TableCell></TableRow>
-                    )}
-                  </TableBody>
-                </Table>
-              </div> */}
 
               {/* Mobile View: Cards */}
               <div className="space-y-3 sm:hidden">

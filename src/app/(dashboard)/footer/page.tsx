@@ -30,75 +30,14 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 
-
-// 1. Update the schema to use .catch("") to guarantee strings
-// const footerSchema = z.object({
-//   tagline: z.string().min(1, "Tagline is required"),
-//   quickLinksTitle: z.string().min(1, "Title is required"),
-//   socialTitle: z.string().min(1, "Social title is required"),
-//   socialTagline: z.string().catch(""), // Guarantees string output
-//   email: z.string().email("Invalid email"),
-//   phone: z.string().catch(""), // Guarantees string output
-//   copyrightText: z.string().min(1, "Copyright is required"),
-//   socials: z.array(
-//     z.object({
-//       id: z.string(),
-//       platform: z.string().min(1, "Platform name required"),
-//       url: z.string().url("Invalid URL"),
-//       logo: z.string().catch(""), // Guarantees string output
-//     })
-//   ),
-// });
-
-// // 2. Infer the type from the schema
-// type FooterFormValues = z.infer<typeof footerSchema>;
-
-// // 3. Simplify the useForm call
-// const form = useForm<FooterFormValues>({
-//   resolver: zodResolver(footerSchema),
-//   defaultValues,
-// });
-
-
-// export default function FooterManager() {
-//   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
-
-//   const defaultValues = {
-//     tagline: "Full Stack Developer & UI/UX Designer",
-//     quickLinksTitle: "Quick Links",
-//     socialTitle: "Follow Me",
-//     socialTagline: "Let's build something great together.",
-//     email: "mohammadzahidhabib786@gmail.com",
-//     phone: "+92 300 1234567",
-//     copyrightText: "© 2026 Made with ❤️ by M Zahid Habib",
-//     socials: [
-//       { id: "1", platform: "GitHub", url: "https://github.com", logo: "" },
-//       { id: "2", platform: "LinkedIn", url: "https://linkedin.com", logo: "" },
-//     ],
-//   };
-
-//  const form = useForm<FooterFormValues, any, FooterFormValues>({
-//   resolver: zodResolver(footerSchema),
-//   defaultValues,
-// });
-
-//   const { fields, append, remove, update } = useFieldArray<FooterFormValues>({
-//     control: form.control,
-//     name: "socials",
-//   });
-
-
-
-
-
 // 1. Define the schema
 const footerSchema = z.object({
   tagline: z.string().min(1, "Tagline is required"),
   quickLinksTitle: z.string().min(1, "Title is required"),
   socialTitle: z.string().min(1, "Social title is required"),
-  socialTagline: z.string().catch(""), 
+  socialTagline: z.string().catch(""),
   email: z.string().email("Invalid email"),
-  phone: z.string().catch(""), 
+  phone: z.string().catch(""),
   copyrightText: z.string().min(1, "Copyright is required"),
   socials: z.array(
     z.object({
@@ -106,7 +45,7 @@ const footerSchema = z.object({
       platform: z.string().min(1, "Platform name required"),
       url: z.string().url("Invalid URL"),
       logo: z.string().catch(""),
-    })
+    }),
   ),
 });
 
@@ -182,7 +121,7 @@ export default function FooterManager() {
           }}
           className="gap-2 font-bold"
         >
-          <RotateCcw className="size-3.5" /> Reset Section
+          <RotateCcw className="size-3.5" /> Reset All
         </Button>
       </div>
 
@@ -271,7 +210,7 @@ export default function FooterManager() {
 
           {/* RIGHT: Social Media Manager */}
           <div className="lg:col-span-7 space-y-4">
-            <div className="p-6 border rounded-2xl bg-card shadow-sm min-h-full space-y-6">
+            <div className="p-6 border rounded-2xl bg-card shadow-sm h-fit space-y-6">
               <div className="flex items-center justify-between border-b pb-4">
                 <div className="space-y-1">
                   <h3 className="font-bold flex items-center gap-2 text-primary uppercase text-xs tracking-widest">

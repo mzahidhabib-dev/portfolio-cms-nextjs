@@ -1,15 +1,18 @@
-"use client"
-import { Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
-import { SidebarMenuButton } from "@/components/ui/sidebar"
+"use client";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
+import { SidebarMenuButton } from "@/components/ui/sidebar";
 
 type ThemeToggleProps = {
-  variant?: "sidebar" | "floating"
-  className?: string
-}
+  variant?: "sidebar" | "floating";
+  className?: string;
+};
 
-export function ThemeToggle({ variant = "sidebar", className }: ThemeToggleProps) {
-  const { theme, setTheme } = useTheme()
+export function ThemeToggle({
+  variant = "sidebar",
+  className,
+}: ThemeToggleProps) {
+  const { theme, setTheme } = useTheme();
 
   const content = (
     <>
@@ -19,7 +22,7 @@ export function ThemeToggle({ variant = "sidebar", className }: ThemeToggleProps
       </span>
       <span className="font-medium">Theme Mode</span>
     </>
-  )
+  );
 
   if (variant === "floating") {
     return (
@@ -30,16 +33,16 @@ export function ThemeToggle({ variant = "sidebar", className }: ThemeToggleProps
       >
         {content}
       </button>
-    )
+    );
   }
 
   return (
-    <SidebarMenuButton 
+    <SidebarMenuButton
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       tooltip="Toggle Theme"
       className={`w-full justify-start ${className ?? ""}`}
     >
       <div className="flex items-center gap-2">{content}</div>
     </SidebarMenuButton>
-  )
+  );
 }

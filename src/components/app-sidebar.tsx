@@ -109,29 +109,10 @@ const pathname = usePathname();
           {/* Theme Toggle - Left aligned when open, Centered when closed */}
           <SidebarMenuItem className="flex items-center justify-start group-data-[collapsible=icon]:justify-center px-2 group-data-[collapsible=icon]:px-0">
             <ThemeToggle />
-            {/* <span className="ml-3 text-sm font-medium text-muted-foreground group-data-[collapsible=icon]:hidden">
-              Appearance
-            </span> */}
+          
           </SidebarMenuItem>
 
-          {/* Profile - Size and Padding Balanced */}
-          {/* <SidebarMenuItem>
-            <SidebarMenuButton 
-              size="lg" 
-              className="w-full hover:bg-black/5 dark:hover:bg-white/10 transition-all 
-                         group-data-[collapsible=icon]:justify-center 
-                         group-data-[collapsible=icon]:p-0"
-            >
-              <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white shadow-md">
-                <span className="text-xs font-bold">M</span>
-              </div>
-              <div className="flex flex-col overflow-hidden text-left group-data-[collapsible=icon]:hidden ml-3">
-                <span className="truncate text-sm font-bold">Mohammad</span>
-                <span className="truncate text-[10px] text-muted-foreground uppercase tracking-wider font-extrabold">Admin</span>
-              </div>
-            </SidebarMenuButton>
-          </SidebarMenuItem> */}
-
+          
 
           <SidebarMenuItem>
       <SidebarMenuButton 
@@ -139,7 +120,7 @@ const pathname = usePathname();
         className="w-full text-destructive hover:bg-destructive/10 hover:text-destructive transition-all group-data-[collapsible=icon]:justify-center"
       >
         <LogOut className="size-5 shrink-0" />
-        <span className="font-bold group-data-[collapsible=icon]:hidden">
+        <span className="font-bold group-data-[collapsible=icon]:hidden"  >
           Logout
         </span>
       </SidebarMenuButton>
