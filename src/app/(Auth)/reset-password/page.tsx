@@ -114,6 +114,7 @@ export default function ResetPasswordPage() {
               <div className="space-y-2">
                 <Input
                   {...emailForm.register("email")}
+                  autoComplete="email"
                   placeholder="admin@famocare.com"
                   className="h-14 rounded-2xl bg-background/50 border-border/50 focus:border-primary transition-all text-center"
                 />
@@ -162,6 +163,7 @@ export default function ResetPasswordPage() {
                   {...resetForm.register("otp")}
                   placeholder="000000"
                   maxLength={6}
+                  autoComplete="one-time-code"
                   className="h-14 rounded-2xl text-center tracking-[1em] font-bold text-xl bg-background/50 border-border/50"
                 />
                 {resetForm.formState.errors.otp && (
@@ -174,6 +176,7 @@ export default function ResetPasswordPage() {
               <div className="relative group">
                 <Input
                   {...resetForm.register("newPassword")}
+                  autoComplete="new-password"
                   type={showPassword ? "text" : "password"}
                   placeholder="New Access Key"
                   className="pr-12 h-14 bg-background/50 border-border/50 focus:border-primary rounded-2xl text-center transition-all"
